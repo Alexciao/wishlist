@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  frontend:
+    image: wishlist-app
+    restart: always
+    ports:
+      - 9099:3000
+    environment:
+      - NEXT_PUBLIC_API_URL=https://example.com/
+  api:
+    restart: always
+    image: wishlist-backend
+    ports:
+      - 9098:9098
+    environment:
+      - NOTION_TOKEN=ntn_xxxxxxxxx
+      - NOTION_DATABASE_ID=1234567
+networks: {}
