@@ -1,7 +1,7 @@
 # Wishlist
 An app to store things you wish to have. For when someone asks you "what would you like?" and you don't have an answer.
 
-> For setup instructions, go [here](https://github.com/Alexciao/wishlist/blob/main/doc/SETUP.md).
+> For setup instructions, go [here](https://github.com/Alexciao/wishlist/blob/master/doc/SETUP.md).
 
 ## FAQ
 - What's the usecase for this app?
