@@ -7,8 +7,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Gift, Filter, Loader2, ShoppingCart, Tag, Euro, Dices } from 'lucide-react';
+import { appName, category, budgetTitle, applyFilters, random, buy, currency } from './strings.json';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const GiftFinder = () => {
   const [gifts, setGifts] = useState([]);
@@ -94,7 +95,7 @@ const GiftFinder = () => {
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="flex items-center justify-center mb-8">
           <Gift className="h-8 w-8 mr-2 text-purple-600" />
-          <h1 className="text-3xl font-bold text-gray-800">Wishlist</h1>
+          <h1 className="text-3xl font-bold text-gray-800">{appName}</h1>
         </div>
 
         <Card className="mb-8">
@@ -103,14 +104,14 @@ const GiftFinder = () => {
               <div className="flex flex-col justify-center">
                 <label className="text-sm font-medium flex items-center mb-2">
                   <Tag className="h-4 w-4 mr-2" />
-                  Category
+                  {category.title}
                 </label>
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Seleziona categoria" />
+                    <SelectValue placeholder={category.choose} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">Tutte le categorie</SelectItem>
+                    <SelectItem value="all">{category.all}</SelectItem>
                     {categories.map((category) => (
                       <SelectItem key={category} value={category}>
                         {category}
@@ -123,7 +124,7 @@ const GiftFinder = () => {
               <div className="flex flex-col justify-center">
                 <label className="text-sm font-medium flex items-center mb-2">
                   <Euro className="h-4 w-4 mr-2" />
-                  Budget: €{budget}
+                  {budgetTitle}: {currency}{budget}
                 </label>
                 <Slider
                   value={[budget]}
@@ -136,11 +137,11 @@ const GiftFinder = () => {
               <div className="flex flex-col justify-center items-stretch gap-4">
                 <Button className="flex-1" onClick={fetchGifts}>
                   <Filter className="h-4 w-4 mr-2" />
-                  Applica filtri
+                  {applyFilters}
                 </Button>
                 <Button variant="outline" onClick={handleRandomGift}>
                   <Dices className="h-4 w-4 mr-2" />
-                  Scegli casuale
+                  {random.button}
                 </Button>
               </div>
             </div>
@@ -159,7 +160,7 @@ const GiftFinder = () => {
                   <div className="flex flex-col justify-center">
                     <h3 className="font-semibold mb-2">{gift.Name}</h3>
                     <p className="text-sm text-gray-500 mb-2">{gift.Brand}</p>
-                    <p className="text-purple-600 font-medium mb-4">€{gift.Price}</p>
+                    <p className="text-purple-600 font-medium mb-4">{currency}{gift.Price}</p>
                   </div>
                   <div className="flex justify-between items-center mt-auto">
                     <span className="text-sm bg-purple-100 text-purple-800 px-2 py-1 rounded">
@@ -172,7 +173,7 @@ const GiftFinder = () => {
                     >
                       <Button variant="outline" size="sm">
                         <ShoppingCart className="h-4 w-4 mr-2" />
-                        Acquista
+                        {buy}
                       </Button>
                     </a>
                   </div>
@@ -187,7 +188,7 @@ const GiftFinder = () => {
             <DialogHeader>
               <div className="flex items-center">
                 <Gift className="h-5 w-5 mr-2 text-purple-600" />
-                <DialogTitle>Regalo casuale</DialogTitle>
+                <DialogTitle>{random.title}</DialogTitle>
               </div>
             </DialogHeader>
 
@@ -202,7 +203,7 @@ const GiftFinder = () => {
                   <h3 className="font-semibold mb-2">{randomGift.Name}</h3>
                   <p className="text-sm text-gray-500 mb-2">{randomGift.Brand}</p>
                   <p className="text-purple-600 font-medium mb-4">
-                    €{randomGift.Price}
+                    {category}{randomGift.Price}
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-sm bg-purple-100 text-purple-800 px-2 py-1 rounded">
@@ -215,7 +216,7 @@ const GiftFinder = () => {
                     >
                       <Button>
                         <ShoppingCart className="h-4 w-4 mr-2" />
-                        Acquista
+                        {buy}
                       </Button>
                     </a>
                   </div>

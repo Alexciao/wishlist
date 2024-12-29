@@ -1,0 +1,16 @@
+{
+    "appName": "Wishlist",
+    "category": {
+        "title": "Category",
+        "choose": "Choose a Category",
+        "all": "All Categories"
+    },
+    "budgetTitle": "Budget",
+    "applyFilters": "Apply Filters",
+    "random": {
+        "title": "Random Gift",
+        "button": "Choose Random Gift"
+    },
+    "buy": "Buy",
+    "currency": "€"
+}
