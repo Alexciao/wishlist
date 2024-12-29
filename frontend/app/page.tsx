@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Gift, Filter, Loader2, ShoppingCart, Tag, Euro, Dices } from 'lucide-react';
-import { appName, category, budgetTitle, applyFilters, random, buy, currency } from './strings.json';
+import { appName, categoryStr, budgetTitle, applyFilters, random, buy, currency } from './strings.json';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -104,14 +104,14 @@ const GiftFinder = () => {
               <div className="flex flex-col justify-center">
                 <label className="text-sm font-medium flex items-center mb-2">
                   <Tag className="h-4 w-4 mr-2" />
-                  {category.title}
+                  {categoryStr.title}
                 </label>
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                   <SelectTrigger>
-                    <SelectValue placeholder={category.choose} />
+                    <SelectValue placeholder={categoryStr.choose} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">{category.all}</SelectItem>
+                    <SelectItem value="all">{categoryStr.all}</SelectItem>
                     {categories.map((category) => (
                       <SelectItem key={category} value={category}>
                         {category}

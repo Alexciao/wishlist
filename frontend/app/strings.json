@@ -1,6 +1,6 @@
 {
     "appName": "Wishlist",
-    "category": {
+    "categoryStr": {
         "title": "Category",
         "choose": "Choose a Category",
         "all": "All Categories"
