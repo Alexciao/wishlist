@@ -3,6 +3,12 @@ FROM node:18 AS builder
 
 WORKDIR /app
 
+# Accept the build argument
+ARG NEXT_PUBLIC_API_URL
+
+# Set the environment variable for the build phase
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
