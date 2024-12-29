@@ -203,7 +203,7 @@ const GiftFinder = () => {
                   <h3 className="font-semibold mb-2">{randomGift.Name}</h3>
                   <p className="text-sm text-gray-500 mb-2">{randomGift.Brand}</p>
                   <p className="text-purple-600 font-medium mb-4">
-                    {category}{randomGift.Price}
+                    {currency}{randomGift.Price}
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-sm bg-purple-100 text-purple-800 px-2 py-1 rounded">
