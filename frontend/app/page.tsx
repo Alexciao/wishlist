@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Gift, Filter, Loader2, ShoppingCart, Tag, Euro, Dices } from 'lucide-react';
-import { appName, categoryStr, budgetTitle, applyFilters, random, buy, currency } from './strings.json';
+import { appName, categoryStr, budgetStr, applyFilters, random, buy, currency } from './strings.json';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -16,7 +16,7 @@ const GiftFinder = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [budget, setBudget] = useState(100);
+  const [budget, setBudget] = useState(0);
   const [randomGift, setRandomGift] = useState(null);
   const [showRandom, setShowRandom] = useState(false);
   const [loadingRandom, setLoadingRandom] = useState(false); // Loading state for random gift
@@ -124,13 +124,15 @@ const GiftFinder = () => {
               <div className="flex flex-col justify-center">
                 <label className="text-sm font-medium flex items-center mb-2">
                   <Euro className="h-4 w-4 mr-2" />
-                  {budgetTitle}: {currency}{budget}
+                  {budget === 0
+                    ? `${budgetStr.title}: ${budgetStr.none}`
+                    : `${budgetStr.title}: ${currency}${budget}`}
                 </label>
                 <Slider
                   value={[budget]}
                   onValueChange={(value) => setBudget(value[0])}
-                  max={1000}
-                  step={10}
+                  max={500} 
+                  step={5} 
                 />
               </div>
 

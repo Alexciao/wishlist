@@ -5,7 +5,10 @@
         "choose": "Choose a Category",
         "all": "All Categories"
     },
-    "budgetTitle": "Budget",
+    "budgetStr": {
+        "title": "Budget",
+        "none": "No Budget"
+    },
     "applyFilters": "Apply Filters",
     "random": {
         "title": "Random Gift",
