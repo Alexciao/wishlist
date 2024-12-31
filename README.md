@@ -23,3 +23,5 @@ An app to store things you wish to have. For when someone asks you "what would y
   - Workaround: Delete all empty pages.
 - Max budget currently is 500 of whatever currency you set in strings.json.
   - Workaround: Set slider to 0 for no budget.
+- Only one currency at a time supported.
+  - Workaround: set all prices to one single currency and set that same currency in strings.json before building.
