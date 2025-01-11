@@ -9,8 +9,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Gift, Filter, Loader2, ShoppingCart, Tag, Euro, Dices } from 'lucide-react';
 import { appName, categoryStr, budgetStr, applyFilters, random, buy, currency } from './strings.json';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
 const GiftFinder = () => {
   const [gifts, setGifts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -72,7 +70,7 @@ const GiftFinder = () => {
     };
 
     try {
-      const response = await fetch(API_URL + '/gifts', {
+      const response = await fetch('/api/gifts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
