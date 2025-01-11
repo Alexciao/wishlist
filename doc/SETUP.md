@@ -26,30 +26,15 @@
 You can optionally customize the strings that appear in the app.
 To do so, you can edit the `frontend/app/strings.json` file.
 ### Building the Images
-There are no prebuilt Docker images at this time, but building them is very simple.
+There isn't a prebuilt Docker image at this time, but building it is very easy.
 
----
-
-If you have a reverse proxy or Cloudflare Tunnels set-up, right now would be the time to assign subdomains and certificates to both the frontend (port 9099) and backend (port 9098).
-Otherwise, you can use `http://your-local-ip:9098` as the API URL.
-Please remember to NOT PUT a trailing slash in the environment variable.
-
-**Frontend**:
 ```
-$ docker build . --build-arg NEXT_PUBLIC_API_URL=http://your-api-url -t wishlist-frontend
-```
-
-**API**
-```
-$ docker build . -t wishlist-api
+$ docker build . -t wishlist-frontend
 ```
 
 ## Getting the App Running
 - Copy the `docker-compose.example.yml` file, and rename it to `docker-compose.yml`.
-### Frontend Set-up
-
-- Set the `NEXT_PUBLIC_API_URL` variable to your API URL, **the same you used during the build**.
-### Backend Set-up
+### Set-up
 - Set the `NOTION_TOKEN` variable and the `NOTION_DATABASE_ID` variables to the ones we got in Step 1.
 ### Running
 - Run the app with

@@ -28,7 +28,7 @@ const GiftFinder = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(API_URL + '/categories');
+      const response = await fetch('/api/categories');
       if (!response.ok) throw new Error('Failed to fetch categories');
       const data = await response.json();
       setCategories(data.categories);
@@ -45,7 +45,7 @@ const GiftFinder = () => {
         ...(budget && { budget: budget })
       };
 
-      const response = await fetch(API_URL + '/gifts', {
+      const response = await fetch('/api/gifts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
