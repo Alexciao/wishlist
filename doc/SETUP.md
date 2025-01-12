@@ -6,6 +6,7 @@
 ## Setting up Notion
 ### Cloning the Template
 - To get started, clone [the Notion template](https://alexciao.notion.site/Wishlist-16b684a97162805a9a77e5a913f5dd3b?pvs=74) to your workspace.
+- It is **IMPERATIVE** that you don't change the names of properties in the database or delete them.
 ### Creating the Integration
 - Go to the [My Integrations page](https://www.notion.so/profile/integrations), and create a new integration.
 - Choose whatever name you want, and select the workspace in which you cloned the template.

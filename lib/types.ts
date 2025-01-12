@@ -10,6 +10,8 @@ export interface NotionItem {
     Price: number;
     'Purchase Link': string;
     Owned?: boolean;
+    Color?: string;
+    Size?: string;
     [key: string]: any;
 }
 

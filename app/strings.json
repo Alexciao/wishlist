@@ -14,6 +14,11 @@
         "title": "Random Gift",
         "button": "Choose Random Gift"
     },
+    "giftStr": {
+        "title": "Gift",
+        "color": "Color",
+        "size": "Size"
+    },
     "buy": "Buy",
     "currency": "€"
 }
