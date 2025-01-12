@@ -26,15 +26,17 @@
 ### Customizing the Strings
 You can optionally customize the strings that appear in the app.
 To do so, you can edit the `frontend/app/strings.json` file.
+
+## Getting the App Running
+- Copy the `docker-compose.example.yml` file, and rename it to `docker-compose.yml`.
+
 ### Building the Images
 There isn't a prebuilt Docker image at this time, but building it is very easy.
 
 ```
-$ docker build . -t wishlist-frontend
+$ docker compose build
 ```
 
-## Getting the App Running
-- Copy the `docker-compose.example.yml` file, and rename it to `docker-compose.yml`.
 ### Set-up
 - Set the `NOTION_TOKEN` variable and the `NOTION_DATABASE_ID` variables to the ones we got in Step 1.
 ### Running
