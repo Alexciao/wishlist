@@ -1,7 +1,9 @@
 # Wishlist
 An app to store things you wish to have. For when someone asks you "what would you like?" and you don't have an answer.
 
-> For setup instructions, go [here](https://github.com/Alexciao/wishlist/blob/master/doc/SETUP.md).
+## Setup Instructions
+> If you have a server and wish to self-host the app **(recommended)**, go [here](https://github.com/Alexciao/wishlist/blob/master/doc/SELF_HOSTING.md) to learn how to setup Wishlist on your own server.
+> If you don't have a server or wish to go for a simpler approach, go [here](https://github.com/Alexciao/wishlist/blob/master/doc/CLOUD_HOSTING.md) to learn how to set up Wishlist on the Cloud.
 
 ## FAQ
 - What's the usecase for this app?

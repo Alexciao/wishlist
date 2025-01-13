@@ -18,8 +18,8 @@ export async function POST(request: Request) {
         continue;
       }
 
-      const { Owned, ...rest } = item;
-      suggestions.push(rest);
+      const { Owned, PageBanner, ...rest } = item;
+      suggestions.push({ ...rest, PageBanner: PageBanner ?? null });
     }
 
     return NextResponse.json({ gifts: suggestions });

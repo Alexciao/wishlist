@@ -8,6 +8,8 @@ import { Slider } from '@/components/ui/slider';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Gift, Filter, Loader2, ShoppingCart, Tag, Euro, Dices, Palette, Ruler } from 'lucide-react';
 import { appName, categoryStr, budgetStr, applyFilters, random, buy, currency, giftStr } from './strings.json';
+import Image from "next/image";
+import { cn } from '@/lib/utils';
 
 const GiftFinder = () => {
   const [gifts, setGifts] = useState([]);
@@ -204,11 +206,29 @@ const GiftFinder = () => {
             </DialogHeader>
 
             {selectedGift && (
-              <div className="p-4">
-                <h3 className="font-semibold mb-2">{selectedGift.Name}</h3>
-                <p className="text-sm text-gray-500 mb-2">{selectedGift.Brand}</p>
-                <p className="text-purple-600 font-medium mb-4">
-                  {formatPrice(selectedGift.Price)}
+              <div className="p-2">
+                {selectedGift && (
+                  <div className="px-4">
+                    {selectedGift.PageBanner && (
+                      <div className="flex justify-center items-center w-full my-2 mb-6">
+                        <div className="relative max-h-48 w-auto">
+                          <Image
+                            src={selectedGift.PageBanner}
+                            alt="Page Banner"
+                            width={500}
+                            height={500}
+                            quality={75}
+                            priority={true}
+                            className="object-contain rounded max-h-48 w-auto"
+                            sizes="(max-width: 1000px) 100vw, 400px"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <h3 className="font-semibold mb-2">{selectedGift.Name}</h3>
+                    <p className="text-sm text-gray-500 mb-2">{selectedGift.Brand}</p>
+                    <p className="text-purple-600 font-medium mb-4">
+                      {formatPrice(selectedGift.Price)}
                 </p>
                 <div className="flex items-center mb-2">
                   {selectedGift.Color && (
@@ -247,6 +267,8 @@ const GiftFinder = () => {
                 </div>
               </div>
             )}
+              </div>
+            )}
           </DialogContent>
         </Dialog>
 
@@ -267,11 +289,34 @@ const GiftFinder = () => {
             ) : (
               randomGift && (
                 <div className="p-4">
+                    {randomGift.PageBanner && (
+                      <img src={randomGift.PageBanner} alt="Page Banner" className="mb-4 w-full h-auto rounded" />
+                    )}
                   <h3 className="font-semibold mb-2">{randomGift.Name}</h3>
                   <p className="text-sm text-gray-500 mb-2">{randomGift.Brand}</p>
                   <p className="text-purple-600 font-medium mb-4">
                       {formatPrice(randomGift.Price)}
                   </p>
+                    <div className="flex items-center mb-2">
+                      {randomGift.Color && (
+                        <div className="flex flex-col items-start mr-4">
+                          <div className="flex items-center">
+                            <Palette className="h-4 w-4 mr-1 text-gray-500" />
+                            <span className="text-gray-500">{giftStr.color}</span>
+                          </div>
+                          <span className="text-black">{randomGift.Color}</span>
+                        </div>
+                      )}
+                      {randomGift.Size && (
+                        <div className="flex flex-col items-start">
+                          <div className="flex items-center">
+                            <Ruler className="h-4 w-4 mr-1 text-gray-500" />
+                            <span className="text-gray-500">{giftStr.size}</span>
+                          </div>
+                          <span className="text-black">{randomGift.Size}</span>
+                        </div>
+                      )}
+                    </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm bg-purple-100 text-purple-800 px-2 py-1 rounded">
                       {randomGift.Category}

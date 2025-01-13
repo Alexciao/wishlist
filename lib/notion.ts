@@ -29,6 +29,7 @@ export async function getDatabase(): Promise<DatabaseResponse> {
       Category: "",
       Price: 0,
       "Purchase Link": "",
+      PageBanner: null as string | null,
     };
 
     // Find title property
@@ -41,6 +42,14 @@ export async function getDatabase(): Promise<DatabaseResponse> {
     const pageTitle = titleProperty.title
       .map((text: any) => text.text.content)
       .join("");
+
+    // Get page cover/banner if exists
+    const pageCover = (row as PageObjectResponse).cover;
+    rowOutput.PageBanner = pageCover?.type === "external"
+      ? pageCover.external.url
+      : pageCover?.type === "file"
+        ? pageCover.file.url
+        : null;
 
     // Process properties
     for (const [key, value] of Object.entries(props)) {

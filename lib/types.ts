@@ -12,6 +12,7 @@ export interface NotionItem {
     Owned?: boolean;
     Color?: string;
     Size?: string;
+    PageBanner?: string; // Add PageBanner property
     [key: string]: any;
 }
 
