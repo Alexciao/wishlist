@@ -33,7 +33,7 @@ const GiftFinder = () => {
       const response = await fetch('/api/categories');
       if (!response.ok) throw new Error('Failed to fetch categories');
       const data = await response.json();
-      setCategories(data.categories);
+      setCategories(data.categories.sort((a, b) => a.localeCompare(b)));
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
