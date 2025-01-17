@@ -290,7 +290,20 @@ const GiftFinder = () => {
               randomGift && (
                 <div className="p-4">
                     {randomGift.PageBanner && (
-                      <img src={randomGift.PageBanner} alt="Page Banner" className="mb-4 w-full h-auto rounded" />
+                      <div className="flex justify-center items-center w-full my-2 mb-6">
+                        <div className="relative max-h-48 w-auto">
+                          <Image
+                            src={randomGift.PageBanner}
+                            alt="Page Banner"
+                            width={500}
+                            height={500}
+                            quality={75}
+                            priority={true}
+                            className="object-contain rounded max-h-48 w-auto"
+                            sizes="(max-width: 1000px) 100vw, 400px"
+                          />
+                        </div>
+                      </div>
                     )}
                   <h3 className="font-semibold mb-2">{randomGift.Name}</h3>
                   <p className="text-sm text-gray-500 mb-2">{randomGift.Brand}</p>
