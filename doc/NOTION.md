@@ -22,4 +22,4 @@
 ## Adding Items
 - When adding an item, you must set all its properties to some value except Size and Color.
 - The page banner is optional, but highly recommended as it'll show as the product image in Wishlist.
-- If you'd like more granular control, you can create subcategories up to 1 level deep, by setting the item category in Notion to this format: `[Main Category] Subcategory`. They'll appear as submenus in Wishlist.
+- If you'd like more granular control, you can create subcategories up to 1 level deep, by setting the item category in Notion to this format: `[Main Category] Subcategory`. They'll appear as submenus in Wishlist. **Please note that, once a category has subcategories, the main category isn't selectable anymore. For example, if category A has subcategories B and C, only A>B and A>C will be selectable in the frontend. This is a known issue.**

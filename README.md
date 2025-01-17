@@ -21,4 +21,6 @@ An app to store things you wish to have. For when someone asks you "what would y
 - Max budget currently is 500 of whatever currency you set in strings.json.
   - Workaround: Set slider to 0 for no budget.
 - Only one currency at a time supported.
-  - Workaround: set all prices to one single currency and set that same currency in strings.json before building.
+  - Workaround: Set all prices to one single currency and set that same currency in strings.json before building.
+- Once a category has subcategories, the main category isn't selectable anymore. For example, if category A has subcategories B and C, only A>B and A>C will be selectable in the frontend.
+  - Workaround: Make an "Other" subcategory (example A>Other).
