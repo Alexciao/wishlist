@@ -32,7 +32,7 @@
 - You can also optionally set the `ITEMS_ORDER` variable to choose how the items appear in the frontend:
   - `unset` (default): Leave the order of the items as it is in Notion.
   - `random`: Randomize the order of the items on each fetch.
-  - `alphabetical`: Sort the items alphabetically.
+  - `alphabetical`: Sort the items alphabetically. May cause slowdowns.
   - `price`: Sort the items by price.
 - Hit **Deploy**. In around a minute, the build process should be over.
 - You're done! Now your app is live at `some-subdomain.vercel.app`. You can add your custom domain if you have one.
