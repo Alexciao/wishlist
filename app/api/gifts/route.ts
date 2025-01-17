@@ -20,6 +20,16 @@ export async function POST(request: Request) {
 
       const { Owned, PageBanner, ...rest } = item;
       suggestions.push({ ...rest, PageBanner: PageBanner ?? null });
+
+      const itemsOrder = process.env.ITEMS_ORDER;
+
+      if (itemsOrder === "random") {
+        suggestions.sort(() => Math.random() - 0.5);
+      } else if (itemsOrder === "alphabetical") {
+        suggestions.sort((a, b) => a.Name.localeCompare(b.Name));
+      } else if (itemsOrder === "price") {
+        suggestions.sort((a, b) => a.Price - b.Price);
+      }
     }
 
     return NextResponse.json({ gifts: suggestions });
