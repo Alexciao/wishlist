@@ -1,25 +1,7 @@
 # How to setup Wishlist
 ## Prerequisites
 - A server with Docker and Docker Compose installed
-- A Notion account
-
-## Setting up Notion
-### Cloning the Template
-- To get started, clone [the Notion template](https://alexciao.notion.site/Wishlist-16b684a97162805a9a77e5a913f5dd3b?pvs=74) to your workspace.
-- It is **IMPERATIVE** that you don't change the names of properties in the database or delete them.
-### Creating the Integration
-- Go to the [My Integrations page](https://www.notion.so/profile/integrations), and create a new integration.
-- Choose whatever name you want, and select the workspace in which you cloned the template.
-- Make sure that the type is **Internal**.
-- Click **Save**, and a modal will open. Click **Configure integration settings**.
-- Click **Show** and take note of the **Internal Integration Secret**.
-### Adding the Integration
-- Go to the page you cloned earlier.
-- In the 3 dot menu, scroll all the way to the bottom until you find **Connections**.
-- Click on it, then search for your integration and add it.
-### Copying the Database ID
-- Hover over the database in the page, and click **Copy link to [x]** (where x is the view you have selected).
-- Take note of the part that is _after your username/_ and _before the question mark (?)_. That's the Database ID.
+- Having done the [Notion setup](https://github.com/Alexciao/wishlist/blob/master/doc/NOTION.md)
 
 ## Building the App
 - To get started, clone the repo to your server.

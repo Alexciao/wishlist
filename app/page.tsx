@@ -3,13 +3,21 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Slider } from '@/components/ui/slider';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Gift, Filter, Loader2, ShoppingCart, Tag, Euro, Dices, Palette, Ruler } from 'lucide-react';
-import { appName, categoryStr, budgetStr, applyFilters, random, buy, currency, giftStr } from './strings.json';
+import { Gift, Loader2, ShoppingCart, Tag, Euro, Dices, Palette, Ruler, ChevronDown } from 'lucide-react';
+import { appName, categoryStr, budgetStr, random, buy, currency, giftStr } from './strings.json';
 import Image from "next/image";
-import { cn } from '@/lib/utils';
 
 const GiftFinder = () => {
   const [gifts, setGifts] = useState([]);
@@ -28,12 +36,19 @@ const GiftFinder = () => {
     fetchGifts();
   }, []);
 
+  useEffect(() => {
+    fetchGifts();
+  }, [selectedCategory]); // Remove budget from dependencies
+
   const fetchCategories = async () => {
     try {
       const response = await fetch('/api/categories');
       if (!response.ok) throw new Error('Failed to fetch categories');
       const data = await response.json();
-      setCategories(data.categories.sort((a, b) => a.localeCompare(b)));
+      // Ensure we sort by the category object's name
+      setCategories(
+        data.categories.sort((a: any, b: any) => a.name.localeCompare(b.name))
+      );
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
@@ -42,15 +57,18 @@ const GiftFinder = () => {
   const fetchGifts = async () => {
     setLoading(true);
     try {
+      const [mainCategory, subCategory] = selectedCategory.split(' > ') || [];
+
       const body = {
-        ...(selectedCategory !== 'all' && { category: selectedCategory }),
-        ...(budget && { budget: budget })
+        ...(mainCategory && mainCategory !== 'all' && { category: mainCategory }),
+        ...(subCategory && { subcategory: subCategory }),
+        ...(budget && { budget: budget }),
       };
 
       const response = await fetch('/api/gifts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
       });
 
       if (!response.ok) throw new Error('Failed to fetch gifts');
@@ -123,19 +141,48 @@ const GiftFinder = () => {
                   <Tag className="h-4 w-4 mr-2" />
                   {categoryStr.title}
                 </label>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={categoryStr.choose} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">{categoryStr.all}</SelectItem>
-                    {categories.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                    {selectedCategory === 'all' ? categoryStr.choose : selectedCategory}
+                    <ChevronDown className="h-4 w-4 opacity-50" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-[var(--radix-dropdown-menu-trigger-width)]">
+                    <DropdownMenuItem
+                      key="all"
+                      onClick={() => setSelectedCategory('all')}
+                    >
+                      {categoryStr.all}
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    {categories.map((cat) => {
+                      if (!cat.subcategories) {
+                        return (
+                          <DropdownMenuItem
+                            key={cat.name}
+                            onClick={() => setSelectedCategory(cat.name)}
+                          >
+                            {cat.name}
+                          </DropdownMenuItem>
+                        );
+                      }
+                      return (
+                        <DropdownMenuSub key={cat.name}>
+                          <DropdownMenuSubTrigger>{cat.name}</DropdownMenuSubTrigger>
+                          <DropdownMenuSubContent>
+                            {cat.subcategories.map((sub) => (
+                              <DropdownMenuItem
+                                key={sub}
+                                onClick={() => setSelectedCategory(`${cat.name} > ${sub}`)}
+                              >
+                                {sub}
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuSubContent>
+                        </DropdownMenuSub>
+                      );
+                    })}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
 
               <div className="flex flex-col justify-center">
@@ -148,17 +195,17 @@ const GiftFinder = () => {
                 <Slider
                   value={[budget]}
                   onValueChange={(value) => setBudget(value[0])}
+                  onValueCommit={(value) => {
+                    setBudget(value[0]);
+                    fetchGifts();
+                  }}
                   max={500} 
                   step={5} 
                 />
               </div>
 
               <div className="flex flex-col justify-center items-stretch gap-4">
-                <Button className="flex-1" onClick={fetchGifts}>
-                  <Filter className="h-4 w-4 mr-2" />
-                  {applyFilters}
-                </Button>
-                <Button variant="outline" onClick={handleRandomGift}>
+                <Button variant="outline" onClick={handleRandomGift} className="flex-1">
                   <Dices className="h-4 w-4 mr-2" />
                   {random.button}
                 </Button>
