@@ -2,7 +2,6 @@
     "appName": "Wishlist",
     "categoryStr": {
         "title": "Category",
-        "choose": "Choose a Category",
         "all": "All Categories"
     },
     "budgetStr": {
@@ -11,7 +10,8 @@
     },
     "random": {
         "title": "Random Gift",
-        "button": "Choose Random Gift"
+        "button": "Choose Random Gift",
+        "buttonSubtitle": "Based on your filters"
     },
     "giftStr": {
         "title": "Gift",

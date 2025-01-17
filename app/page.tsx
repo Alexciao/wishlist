@@ -8,9 +8,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Slider } from '@/components/ui/slider';
@@ -18,6 +15,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Gift, Loader2, ShoppingCart, Tag, Euro, Dices, Palette, Ruler, ChevronDown } from 'lucide-react';
 import { appName, categoryStr, budgetStr, random, buy, currency, giftStr } from './strings.json';
 import Image from "next/image";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const GiftFinder = () => {
   const [gifts, setGifts] = useState([]);
@@ -83,15 +86,18 @@ const GiftFinder = () => {
   };
 
   const handleRandomGift = async () => {
-    setLoadingRandom(true); // Start loading for random gift
-    setShowRandom(true); // Open the modal immediately
-
-    const body = {
-      ...(selectedCategory !== 'all' && { category: selectedCategory }),
-      ...(budget && { budget: budget })
-    };
+    setLoadingRandom(true);
+    setShowRandom(true);
 
     try {
+      const [mainCategory, subCategory] = selectedCategory.split(' > ') || [];
+
+      const body = {
+        ...(mainCategory && mainCategory !== 'all' && { category: mainCategory }),
+        ...(subCategory && { subcategory: subCategory }),
+        ...(budget && { budget: budget })
+      };
+
       const response = await fetch('/api/gifts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -106,7 +112,7 @@ const GiftFinder = () => {
     } catch (error) {
       console.error('Error fetching random gift:', error);
     } finally {
-      setLoadingRandom(false); // Stop loading once the random gift is fetched
+      setLoadingRandom(false);
     }
   };
 
@@ -142,14 +148,20 @@ const GiftFinder = () => {
                   {categoryStr.title}
                 </label>
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
-                    {selectedCategory === 'all' ? categoryStr.choose : selectedCategory}
-                    <ChevronDown className="h-4 w-4 opacity-50" />
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="justify-between w-full"
+                    >
+                      <span className="font-normal">{selectedCategory === 'all' ? categoryStr.all : selectedCategory}</span>
+                      <ChevronDown className="h-4 w-4 opacity-50" />
+                    </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-[var(--radix-dropdown-menu-trigger-width)]">
+                  <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-[60vh] overflow-y-auto ">
                     <DropdownMenuItem
-                      key="all"
                       onClick={() => setSelectedCategory('all')}
+                      className={`py-2 transition-all duration-200 cursor-pointer ${selectedCategory === 'all' ? "font-bold" : ""
+                        }`}
                     >
                       {categoryStr.all}
                     </DropdownMenuItem>
@@ -158,27 +170,44 @@ const GiftFinder = () => {
                       if (!cat.subcategories) {
                         return (
                           <DropdownMenuItem
-                            key={cat.name}
+                            key={`${cat.name}`}
                             onClick={() => setSelectedCategory(cat.name)}
+                            className={`py-2 transition-all duration-200 cursor-pointer ${selectedCategory === cat.name ? "font-bold" : ""
+                              }`}
                           >
                             {cat.name}
                           </DropdownMenuItem>
                         );
                       }
                       return (
-                        <DropdownMenuSub key={cat.name}>
-                          <DropdownMenuSubTrigger>{cat.name}</DropdownMenuSubTrigger>
-                          <DropdownMenuSubContent>
-                            {cat.subcategories.map((sub) => (
-                              <DropdownMenuItem
-                                key={sub}
-                                onClick={() => setSelectedCategory(`${cat.name} > ${sub}`)}
-                              >
-                                {sub}
-                              </DropdownMenuItem>
-                            ))}
-                          </DropdownMenuSubContent>
-                        </DropdownMenuSub>
+                        <Accordion
+                          type="single"
+                          collapsible
+                          className="w-full"
+                          key={cat.name}
+                        >
+                          <AccordionItem value={cat.name} className="border-0">
+                            <AccordionTrigger
+                              className="py-2 px-2 hover:bg-accent hover:text-accent-foreground font-normal hover:no-underline rounded transition-all duration-200"
+                            >
+                              {cat.name}
+                            </AccordionTrigger>
+                            <AccordionContent className="pb-0">
+                              <div className="flex flex-col">
+                                {cat.subcategories.map((sub) => (
+                                  <DropdownMenuItem
+                                    key={sub}
+                                    onClick={() => setSelectedCategory(`${cat.name} > ${sub}`)}
+                                    className={`px-4 py-2 transition-all duration-200 cursor-pointer ${selectedCategory === `${cat.name} > ${sub}` ? "font-bold" : ""
+                                      }`}
+                                  >
+                                    {sub}
+                                  </DropdownMenuItem>
+                                ))}
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
                       );
                     })}
                   </DropdownMenuContent>
@@ -206,8 +235,13 @@ const GiftFinder = () => {
 
               <div className="flex flex-col justify-center items-stretch gap-4">
                 <Button variant="outline" onClick={handleRandomGift} className="flex-1">
-                  <Dices className="h-4 w-4 mr-2" />
-                  {random.button}
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center">
+                      <Dices className="h-4 w-4 mr-2" />
+                      {random.button}
+                    </div>
+                    <span className="text-xs text-gray-500 mt-1">{random.buttonSubtitle}</span>
+                  </div>
                 </Button>
               </div>
             </div>
